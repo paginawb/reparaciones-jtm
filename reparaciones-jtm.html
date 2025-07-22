@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reparaciones JTM - Accesorios para Celulares</title>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #caffcf;
+      background: url('https://media.tenor.com/2uyENRmiUt0AAAAC/coding.gif') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header, main, section {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px;
+    }
+    h1, h2, h3 {
+      color: #00ff88;
+      text-align: center;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #00ffc3;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #00ff88; }
+    .producto {
+      background-color: rgba(20, 20, 20, 0.8);
+      border: 1px solid #00ff88;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .producto img {
+      max-width: 100px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #00ff88;
+      border: none;
+      padding: 8px 16px;
+      color: #000;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 5px;
+    }
+    button:hover { background-color: #00ffc3; }
+    .btn-wsp {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #25d366;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .btn-wsp:hover { background-color: #1ebe57; }
+  </style>
+</head>
+<body>
+  <header id="inicio">
+    <div style="text-align:center;">
+      <img src="tecnico_celular.png" alt="Técnico celular" style="max-width:180px; margin-top:10px;">
+    </div>
+    <h1>Reparaciones JTM</h1>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#carrito">Carrito</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="catalogo" class="productos">
+      <h2>Catálogo de Accesorios</h2>
+      <div class="producto"><img src="https://tse4.mm.bing.net/th/id/OIP.oI4V4DOK9FnCpMyytZOc1QHaHa?pid=Api" alt="Audífonos"><h3>Audífonos</h3><p>$350</p><button onclick="agregarAlCarrito('Audífonos', 350)">Agregar</button></div>
+      <div class="producto"><img src="https://tse1.mm.bing.net/th/id/OIP.r9rRmre2mU1fKLfUvbvZ-wHaGr?pid=Api" alt="Cable USB"><h3>Cable USB</h3><p>$75</p><button onclick="agregarAlCarrito('Cable USB', 75)">Agregar</button></div>
+      <div class="producto"><img src="https://tse2.mm.bing.net/th/id/OIP.qWfdESB9Ox3MkID7gvYEnAHaGV?pid=Api" alt="Memoria microSD"><h3>Memoria USB</h3><p>$120</p><button onclick="agregarAlCarrito('Memoria microSD 32GB', 120)">Agregar</button></div>
+      <div class="producto"><img src="https://tse3.mm.bing.net/th/id/OIP.-Ugxbg6wKvtKuzTeClulBAHaHa?pid=Api" alt="Protector"><h3>Protector</h3><p>$100</p><button onclick="agregarAlCarrito('Protector', 100)">Agregar</button></div>
+      <div class="producto"><img src="https://tse3.mm.bing.net/th/id/OIP.-Ugxbg6wKvtKuzTeClulBAHaHa?pid=Api" alt="Mica"><h3>Mica</h3><p>$40</p><button onclick="agregarAlCarrito('Mica', 40)">Agregar</button></div>
+    </section>
+    <section id="servicios" class="servicios">
+      <h2>Servicios de Reparación</h2>
+      <p style="text-align:center;">Selecciona el servicio que necesitas:</p>
+      <div style="text-align:center;">
+        <button onclick="solicitarServicio('Cambio de pantalla')">Cambio de pantalla</button>
+        <button onclick="solicitarServicio('Reemplazo de batería')">Reemplazo de batería</button>
+        <button onclick="solicitarServicio('Reparación de puerto de carga')">Reparación de puerto de carga</button>
+        <button onclick="solicitarServicio('Actualización de software')">Actualización de software</button>
+        <button onclick="solicitarServicio('Revisión general')">Revisión general</button>
+      </div>
+    </section>
+    <section id="carrito" class="carrito">
+      <h2>Carrito</h2>
+      <ul id="lista-carrito"></ul>
+      <p>Total: $<span id="total">0</span></p>
+      <a id="btn-wsp" class="btn-wsp" href="javascript:void(0)">Enviar pedido por WhatsApp</a>
+    </section>
+  </main>
+  <script>
+    const carrito = [];
+    function agregarAlCarrito(nombre, precio) {
+      const lista = document.getElementById("lista-carrito");
+      const item = document.createElement("li");
+      item.textContent = `${nombre} - $${precio}`;
+      lista.appendChild(item);
+      carrito.push({ nombre, precio });
+      const total = document.getElementById("total");
+      total.textContent = parseInt(total.textContent) + precio;
+    }
+    function solicitarServicio(servicio) {
+      const marca = prompt(`¿Cuál es la MARCA del celular para "${servicio}"?`);
+      if (!marca) return;
+      const modelo = prompt(`¿Cuál es el MODELO del celular (${marca})?`);
+      if (!modelo) return;
+      const descripcion = prompt(`¿Qué le pasó al celular?`);
+      if (!descripcion) return;
+      const mensajeServicio = `${servicio} - ${marca} ${modelo} (${descripcion})`;
+      const lista = document.getElementById("lista-carrito");
+      const item = document.createElement("li");
+      item.textContent = mensajeServicio;
+      lista.appendChild(item);
+      carrito.push({ nombre: mensajeServicio, precio: 0 });
+      alert("Servicio agregado al carrito. Te daremos cotización por WhatsApp.");
+    }
+    document.getElementById("btn-wsp").addEventListener("click", function (event) {
+      event.preventDefault();
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+      let mensaje = "Hola, quiero hacer un pedido o cotización con los siguientes elementos:
+";
+      let total = 0;
+      carrito.forEach(producto => {
+        mensaje += `• ${producto.nombre}`;
+        if (producto.precio > 0) {
+          mensaje += ` - $${producto.precio}`;
+          total += producto.precio;
+        }
+        mensaje += "\n";
+      });
+      if (total > 0) {
+        mensaje += `\nTotal de productos: $${total}`;
+      }
+      const url = `https://wa.me/524522194841?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
+    });
+  </script>
+</body>
+</html>
